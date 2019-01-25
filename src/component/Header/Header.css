@@ -1,0 +1,20 @@
+.header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #AB2A19;
+    height: 100px;
+    width: 100%;
+    color: white;
+    margin-bottom: 80px;
+  }
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    display: inline;
+}
+
+.logo {
+    height: 55px;
+    margin: 0 25px 0 85px;
+}

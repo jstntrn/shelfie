@@ -1,3 +1,18 @@
 .App {
   text-align: center;
+  display: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+
+.body-display {
+	display: flex;
+	flex-direction: row-reverse;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+  align-content: stretch;
 }

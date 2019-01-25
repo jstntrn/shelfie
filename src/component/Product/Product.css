@@ -1,0 +1,25 @@
+.product-container {
+    display: flex;
+    justify-content: flex-start;
+    height: 300px;
+    width: 500px;
+    border-radius: 10px;
+    background-color: #D34735;
+    margin: 20px;
+}
+
+.img-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    height: 230px;
+    min-width: 300px;
+    max-width: 500px;
+    border: 1px solid #D34735;
+    overflow: hidden;
+    margin: 15px;
+}
+
+.card_image {
+    width: 100%;
+}
