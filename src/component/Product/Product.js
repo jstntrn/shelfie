@@ -11,12 +11,15 @@ export default function Product(props){
             <div className='img-container'>
                 <img className='card-image' src={props.image_url} alt='product' />
             </div>
-            <h4>{props.name}</h4>
-            <h4>${props.price}</h4>
-            <div className='card-buttons'>
-                <button className='card-button' onClick={() => deleteFn(id)}>Delete</button>
-                <Link to={`/product/edit/${id}`}><button className='card-button'>Edit</button></Link>
+            <div className='info'>
+                <h4>{props.name}</h4>
+                <h4>${props.price}</h4>
+                <div className='card-buttons'>
+                    <button className='card-button' onClick={() => deleteFn(id)}>Delete</button>
+                    <Link to={`/product/edit/${id}`}><button className='card-button'>Edit</button></Link>
+                </div>
             </div>
+
         </div>
     )
 }

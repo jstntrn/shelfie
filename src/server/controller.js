@@ -34,5 +34,14 @@ module.exports = {
             res.status(500).send('Update Error');
             console.log(err);
         })
+    },
+    getProduct: (req, res) => {
+        const db = req.app.get('db');
+        db.get_product([req.params.id])
+        .then((product) => {res.status(200).send(product)})
+        .catch((err) => {
+            res.status(500).send('Get One Error');
+            console.log(err);
+        })
     }
 }

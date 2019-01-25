@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import defaultImage from './../../graphics/no-image.JPG';
 import './Form.css';
+import axios from 'axios';
 
 export default class Form extends Component{
-
+    
     constructor(){
         super()
         this.state = {
@@ -11,8 +12,20 @@ export default class Form extends Component{
             product_name: '',
             price: 0
         }
-        
+        this.addProduct = this.addProduct.bind(this)
     }
+    
+    addProduct(){
+        axios.post('/api/product',
+        {
+            name: this.state.product_name,
+            price: this.state.price,
+            image_url: this.state.image_url
+        })
+        .then((res) => {
+          console.log('added')
+        })
+      }
 
     handleImageUpdate(val){
         this.setState({
@@ -40,15 +53,6 @@ export default class Form extends Component{
         })
     }
 
-    handleAdd(){
-        const {add} = this.props;
-        const {product_name, price, image_url} = this.state;
-        add({
-            name: product_name,
-            price: price,
-            image_url: image_url
-        })
-    }
 
     render(){
         return(
@@ -65,7 +69,7 @@ export default class Form extends Component{
                 <input onChange={(e) => this.handlePriceUpdate(e.target.value)} value={this.state.price}/>
                 <div className='form-buttons'>
                     <button className='form-button' onClick={() => this.handleClear()}>Cancel</button>
-                    <button className='form-button'onClick={() => this.handleAdd()}>Add to Inventory</button>
+                    <button className='form-button'onClick={() => this.addProduct()}>Add to Inventory</button>
                 </div>
             </div>
         )

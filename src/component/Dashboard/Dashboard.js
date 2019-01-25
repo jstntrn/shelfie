@@ -12,18 +12,24 @@ export default class Dashboard extends Component{
         }
       }
       
-      componentDidMount(){
-        axios.get('/api/inventory')
-        .then((res) => {
-          this.setState({
-            productList: res.data
-          })
+    componentDidMount(){
+    axios.get('/api/inventory')
+    .then((res) => {
+        this.setState({
+        productList: res.data
+        })
+    })
+    }
+
+    deleteProduct(id) {
+        axios.delete(`/api/product/${id}`)
+        .then( (res) => {
+          console.log('deleted')
         })
       }
 
     render(){
-        let {deleteFn} = this.props
-
+ 
         return(
             <div>
                 {
@@ -34,7 +40,7 @@ export default class Dashboard extends Component{
                         image_url={product.image_url}
                         name={product.name}
                         price={product.price}
-                        deleteFn={deleteFn}
+                        deleteFn={this.deleteProduct}
                         />
                     ))
                 }

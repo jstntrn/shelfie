@@ -13,18 +13,19 @@ export default class Form extends Component{
             product_name: '',
             price: 0
         }
-        
+        this.editProduct = this.editProduct.bind(this)
     }
 
     componentDidMount(){
-        axios.get(`/api/product/${this.props.match.params.id}`)
+        axios.get(`/api/inventory/${this.props.match.params.id}`)
         .then( (res) => {
           this.setState({
-            id: res.data.product_id,
+            id: res.data.id,
             image_url: res.data.image_url,
-            product_name: res.data.name,
+            product_name: res.data.product_name,
             price: res.data.price
           })
+          console.log(this.props.match.params.id)
         })
       }
 
@@ -47,6 +48,7 @@ export default class Form extends Component{
     }
 
     handleClear(){
+        console.log(this.state)
         this.setState({
             image_url: '',
             product_name: '',
@@ -54,15 +56,17 @@ export default class Form extends Component{
         })
     }
 
-    handleEdit(){
-        const {edit} = this.props;
-        const {id, product_name, price, image_url} = this.state;
-        edit(id,{
-            name: product_name,
-            price: price,
-            image_url: image_url
+    editProduct(){
+        axios.put(`/api/product/${this.state.id}`,
+        {
+            name: this.state.product_name,
+            price: this.state.price,
+            image_url: this.state.image_url
         })
-    }
+        .then( (res) => {
+          console.log('edited')
+        })
+      }
 
     render(){
         return(
@@ -79,7 +83,7 @@ export default class Form extends Component{
                 <input onChange={(e) => this.handlePriceUpdate(e.target.value)} value={this.state.price}/>
                 <div className='form-buttons'>
                     <button className='form-button' onClick={() => this.handleClear()}>Cancel</button>
-                    <button className='form-button'onClick={() => this.handleEdit(this.state.id)}>Save Changers</button>
+                    <button className='form-button'onClick={() => this.editProduct(this.state.id)}>Save Changes</button>
                 </div>
             </div>
         )
