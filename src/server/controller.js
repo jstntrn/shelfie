@@ -1,8 +1,8 @@
 module.exports = {
-    create: (req, res) => {
+    addProduct: (req, res) => {
         const db = req.app.get('db');
         const {name, price, image_url} = req.body;
-        db.add_product([name, price, image_url])
+        db.create_product([name, price, image_url])
         .then(() => {res.sendStatus(200)})
         .catch((err) => res.status(500).send('error adding product'))
     },
@@ -15,4 +15,24 @@ module.exports = {
             console.log(err);
         })
     },
+    deleteProduct: (req, res) => {
+        console.log(req.params)
+        const db = req.app.get('db');
+        db.delete_product([req.params.id])
+        .then(() => {res.sendStatus(200)})
+        .catch((err) => {res.status(200).send('delete error')})
+    },
+    editProduct: (req, res) => {
+        const db = req.app.get('db');
+        const {product_id} = this.params.id;
+        const {name, price, image_url} = req.body;
+        db.edit_product([product_id, name, price, image_url])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch((err) => {
+            res.status(500).send('Update Error');
+            console.log(err);
+        })
+    }
 }

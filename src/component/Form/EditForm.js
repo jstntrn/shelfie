@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
 import defaultImage from './../../graphics/no-image.JPG';
 import './Form.css';
+import axios from 'axios';
 
 export default class Form extends Component{
 
     constructor(){
         super()
         this.state = {
+            id: null,
             image_url: '',
             product_name: '',
             price: 0
         }
         
     }
+
+    componentDidMount(){
+        axios.get(`/api/product/${this.props.match.params.id}`)
+        .then( (res) => {
+          this.setState({
+            id: res.data.product_id,
+            image_url: res.data.image_url,
+            product_name: res.data.name,
+            price: res.data.price
+          })
+        })
+      }
 
     handleImageUpdate(val){
         this.setState({
@@ -40,10 +54,10 @@ export default class Form extends Component{
         })
     }
 
-    handleAdd(){
-        const {add} = this.props;
-        const {product_name, price, image_url} = this.state;
-        add({
+    handleEdit(){
+        const {edit} = this.props;
+        const {id, product_name, price, image_url} = this.state;
+        edit(id,{
             name: product_name,
             price: price,
             image_url: image_url
@@ -65,7 +79,7 @@ export default class Form extends Component{
                 <input onChange={(e) => this.handlePriceUpdate(e.target.value)} value={this.state.price}/>
                 <div className='form-buttons'>
                     <button className='form-button' onClick={() => this.handleClear()}>Cancel</button>
-                    <button className='form-button'onClick={() => this.handleAdd()}>Add to Inventory</button>
+                    <button className='form-button'onClick={() => this.handleEdit(this.state.id)}>Save Changers</button>
                 </div>
             </div>
         )
