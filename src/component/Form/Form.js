@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import defaultImage from './../../graphics/no-image.JPG';
 import './Form.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default class Form extends Component{
     
@@ -68,8 +69,8 @@ export default class Form extends Component{
                 <h2>Price:</h2>
                 <input onChange={(e) => this.handlePriceUpdate(e.target.value)} value={this.state.price}/>
                 <div className='form-buttons'>
-                    <button className='form-button' onClick={() => this.handleClear()}>Cancel</button>
-                    <button className='form-button'onClick={() => this.addProduct()}>Add to Inventory</button>
+                    <Link to='/'><button className='form-button' onClick={() => this.handleClear()}>Cancel</button></Link>
+                    <Link to='/'><button className='form-button'onClick={() => this.addProduct()}>Add to Inventory</button></Link>
                 </div>
             </div>
         )

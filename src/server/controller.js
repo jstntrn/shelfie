@@ -16,7 +16,6 @@ module.exports = {
         })
     },
     deleteProduct: (req, res) => {
-        console.log(req.params)
         const db = req.app.get('db');
         db.delete_product([req.params.id])
         .then(() => {res.sendStatus(200)})
@@ -24,11 +23,13 @@ module.exports = {
     },
     editProduct: (req, res) => {
         const db = req.app.get('db');
-        const {product_id} = this.params.id;
+        const product_id = req.params.id;
         const {name, price, image_url} = req.body;
-        db.edit_product([product_id, name, price, image_url])
+        let id = Number(product_id);
+        let priceFloat = Number(price);
+        db.edit_product([id, name, priceFloat, image_url])
         .then(() => {
-            res.sendStatus(200)
+            console.log('editProduct completed')
         })
         .catch((err) => {
             res.status(500).send('Update Error');

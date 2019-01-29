@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import defaultImage from './../../graphics/no-image.JPG';
 import './Form.css';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
+ 
 export default class Form extends Component{
 
     constructor(){
         super()
         this.state = {
-            id: null,
+            id: 0,
             image_url: '',
             product_name: '',
             price: 0
@@ -19,13 +20,14 @@ export default class Form extends Component{
     componentDidMount(){
         axios.get(`/api/inventory/${this.props.match.params.id}`)
         .then( (res) => {
+            console.log(res.data[0])
           this.setState({
-            id: res.data.id,
-            image_url: res.data.image_url,
-            product_name: res.data.product_name,
-            price: res.data.price
+            id: res.data[0].product_id,
+            image_url: res.data[0].image_url,
+            product_name: res.data[0].name,
+            price: res.data[0].price
           })
-          console.log(this.props.match.params.id)
+          console.log(typeof this.state.price)
         })
       }
 
@@ -64,7 +66,7 @@ export default class Form extends Component{
             image_url: this.state.image_url
         })
         .then( (res) => {
-          console.log('edited')
+          console.log(this.state)
         })
       }
 
@@ -82,8 +84,8 @@ export default class Form extends Component{
                 <h2>Price:</h2>
                 <input onChange={(e) => this.handlePriceUpdate(e.target.value)} value={this.state.price}/>
                 <div className='form-buttons'>
-                    <button className='form-button' onClick={() => this.handleClear()}>Cancel</button>
-                    <button className='form-button'onClick={() => this.editProduct(this.state.id)}>Save Changes</button>
+                    <Link to='/'><button className='form-button' onClick={() => this.handleClear()}>Cancel</button></Link>
+                    <Link to='/'><button className='form-button'onClick={() => this.editProduct()}>Save Changes</button></Link>
                 </div>
             </div>
         )
